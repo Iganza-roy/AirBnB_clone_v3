@@ -79,15 +79,18 @@ class DBStorage:
         """Retrrieves one object based on class and ID"""
         if cls is None or id is None:
             return None
-        if type(cls) != str or type(id) != str:
+        if not isinstance(cls, str) or not isinstance(id, str):
             return None
+
+        if cls not in classes:
+            return NOne
 
         obj = self.__session.query(classes[cls]).filter_by(id=id).first()
         return obj
 
-    def count(self, id=None):
+    def count(self, cls=None):
         """Counts number of objects in storage"""
         if cls is None:
-            return self.__session.query(Base)
+            return self.__session.query(Base).count()
         else:
             return self.__session.query(classes[cls]).count()
