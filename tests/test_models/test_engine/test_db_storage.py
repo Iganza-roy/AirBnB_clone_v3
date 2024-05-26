@@ -18,6 +18,7 @@ import json
 import os
 import pep8
 import unittest
+from models import storage
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
            "Review": Review, "State": State, "User": User}
@@ -87,11 +88,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save properly saves objects to file.json"""
 
-    def setUp(self):
-        """Set up testing environment"""
-        storage.clear()
-
-    def test_get_db(self):
+    def test_get(self):
         """Tests method for obtaining an instance from database storage"""
         state_data = {"name": "Cundinamarca"}
         state = State(**state_data)
