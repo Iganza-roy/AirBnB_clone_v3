@@ -56,7 +56,7 @@ def update_amenity(amenity_id: str):
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
-    if not request.json:
+    if not request.get_json:
         abort(400, description="Not a JSON")
     data = request.get_json()
 
