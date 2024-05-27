@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Creates a route for API status"""
- 
+
 from api.v1.views import app_views
 from flask import jsonify
 from models.amenity import Amenity
