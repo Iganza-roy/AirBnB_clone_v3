@@ -8,7 +8,7 @@ from api.v1.views import app_views
 from flask import jsonify, request, abort
 
 
-@app_views.route('states/state_id>/cities',
+@app_views.route('/states/state_id>/cities',
                  methods=['GET'], strict_slashes=False)
 def all_cities(state_id):
     """Retrieves a list of all city objects"""
@@ -38,7 +38,8 @@ def delete_city(city_id: str):
     return jsonify({}), 200
 
 
-@app_views.route('/cities', methods=['POST'], strict_slashes=False)
+@app_views.route('/states/<state_id>/cities',
+                 methods=['POST'], strict_slashes=False)
 def create_city():
     """Creates a City"""
     if not request.json:
