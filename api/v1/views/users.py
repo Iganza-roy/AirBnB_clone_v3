@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Creates a view for users"""
+"""Creates a view for Users"""
 
 from models import storage
 from models.user import User
