@@ -65,7 +65,7 @@ def create_obj_review():
 
 @app_views.route('/reviews/<review_id>',
                  methods=['PUT'], strict_slashes=False)
-def update_review(review_id: str):
+def update_obj_review(review_id: str):
     """Updates a review"""
     review = storage.get(Review, review_id)
     if not review:
