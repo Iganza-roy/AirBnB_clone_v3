@@ -144,7 +144,7 @@ class TestStorageGetCount(unittest.TestCase):
         self.assertIsNone(self.file_storage.get(State, "non-existent-id"))
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_count_method(self):
+    def test_cnt_method(self):
         """Test the count method in FileStorage"""
         initial_count = self.file_storage.count()
         self.assertEqual(initial_count, 1)
@@ -164,7 +164,7 @@ class TestStorageGetCount(unittest.TestCase):
         self.file_storage.save()
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test__no_objects(self):
+    def test_no_objs(self):
         """Test the count method when no objects are present in FileStorage"""
         self.file_storage.delete(self.state)
         self.file_storage.save()
