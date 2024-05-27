@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 """Creates a view for reviews"""
 
-from models import storage
 from models.review import Review
+from models.place import Place
+from models.user import User
+from models import storage
 from api.v1.views import app_views
-from flask import jsonify, request, abort
-
+from flask import abort, jsonify, request
 
 @app_views.route('places/<place_id>/reviews',
                  methods=['GET'], strict_slashes=False)
-def all_reviews(place_id):
+def all_review_obj(place_id):
     """Retrieves a list of all review objects"""
     place = storage.get(Place, place_id)
     if not place:
@@ -19,7 +20,7 @@ def all_reviews(place_id):
 
 @app_views.route('/reviews/<review_id>',
                  methods=['GET'], strict_slashes=False)
-def review_with_id(review_id: str):
+def review_obj_id(review_id: str):
     """Retrieves review object using ID"""
     review = storage.get(Review, review_id)
     if not review:
@@ -28,7 +29,7 @@ def review_with_id(review_id: str):
 
 
 @app_views.route('/reviews/<review_id>', methods=['DELETE'])
-def delete_review(review_id: str):
+def delete_review_obj(review_id: str):
     """Deletes review object"""
     review = storage.get(Review, review_id)
     if not review:
@@ -40,7 +41,7 @@ def delete_review(review_id: str):
 
 @app_views.route('/places/<place_id>/reviews',
                  methods=['POST'], strict_slashes=False)
-def create_review():
+def create_obj_review():
     """Creates a Review"""
     place = storage.get(Place, place_id)
     if not place:
@@ -74,7 +75,7 @@ def update_review(review_id: str):
     data = request.get_json()
 
     for key, value in data.items():
-        if key not in ['id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id' 'created_at', 'updated_at']:
             setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict()), 200
