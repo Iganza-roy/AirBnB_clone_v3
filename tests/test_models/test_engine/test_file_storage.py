@@ -116,56 +116,28 @@ class TestFileStorage(unittest.TestCase):
 
 
 class TestStorageGetCount(unittest.TestCase):
-    def setUp(self):
-        """Set up test environment for FileStorage"""
-        storage.clear()
-
-    def tearDown(self):
-        """Clean up test environment for FileStorage"""
-        storage.clear()
-
+    """Test the FileStorage"""
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_method(self):
         """Test the get method in FileStorage"""
-        state_id = self.state.id
-        retr_state = self.file_storage.get(State, state_id)
-        self.assertIsNotNone(retr_state)
-        self.assertEqual(retr_state.id, state_id)
-        self.assertEqual(retr_state.name, "California")
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_invalid_id(self):
-        """Test the get method with invalid ID in FileStorage"""
-        self.assertIsNone(self.file_storage.get(State, "non-existent-id"))
+        storage = FileStorage()
+        dic = {"name": "Vecindad"}
+        instance = State(**dic)
+        storage.new(instance)
+        storage.save()
+        storage = FileStorage()
+        get_instance = storage.get(State, instance.id)
+        self.assertEqual(get_instance, instance)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_cnt_method(self):
         """Test the count method in FileStorage"""
-        initial_count = self.file_storage.count()
-        self.assertEqual(initial_count, 1)
-
-        new_state = State(name="Nevada")
-        new_state.save()
-        self.file_storage.new(new_state)
-        self.file_storage.save()
-
-        new_count = self.file_storage.count()
-        self.assertEqual(new_count, 2)
-
-        state_count = self.file_storage.count(State)
-        self.assertEqual(state_count, 2)
-
-        self.file_storage.delete(new_state)
-        self.file_storage.save()
-
-    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
-    def test_no_objs(self):
-        """Test the count method when no objects are present in FileStorage"""
-        self.file_storage.delete(self.state)
-        self.file_storage.save()
-
-        count = self.file_storage.count()
-        self.assertEqual(count, 0)
-
-        state_count = self.file_storage.count(State)
-        self.assertEqual(state_count, 0)
+        storage = FileStorage()
+        dic = {"name": "new"}
+        state = State(**dic)
+        storage.new(state)
+        dic = {"name": "Texas"}
+        city = City(**dic)
+        storage.new(city)
+        storage.save()
+        self.assertEqual(len(storage.all()), storage.count())

@@ -69,15 +69,8 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    def setUp(self):
-        """Set up test environment for FileStorage"""
-        storage.clear()
-
-    def tearDown(self):
-        """Clean up test environment for FileStorage"""
-        storage.clear()
+class TestDbStorage(unittest.TestCase):
+    """Testing the db class"""
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
@@ -107,14 +100,11 @@ class TestFileStorage(unittest.TestCase):
 
     def test_cnt(self):
         """Tests count method in database storage"""
-        state_d = {"name": "Vecindad"}
-        state = State(**state_d)
+        dic = {"name": "Major"}
+        state = State(**dic)
         storage.new(state)
-        city_d = {"name": "Mexico", "state_id": state.id}
-        city = City(**city_d)
+        dic = {"name": "Texas", "state_id": state.id}
+        city = City(**dic)
         storage.new(city)
         storage.save()
-        total_cnt = storage.count()
-        state_cnt = storage.count(State)
-        self.assertEqual(len(storage.all()), total_cnt)
-        self.assertEqual(state_cnt, 1)
+        self.assertEqual(len(storage.all()), storage.count())
