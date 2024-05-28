@@ -118,16 +118,11 @@ class TestFileStorage(unittest.TestCase):
 class TestStorageGetCount(unittest.TestCase):
     def setUp(self):
         """Set up test environment for FileStorage"""
-        self.file_storage = FileStorage()
-        self.state = State(name="California")
-        self.state.save()
-        self.file_storage.new(self.state)
-        self.file_storage.save()
+        storage.clear()
 
     def tearDown(self):
         """Clean up test environment for FileStorage"""
-        self.file_storage.delete(self.state)
-        self.file_storage.save()
+        storage.clear()
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get_method(self):

@@ -11,7 +11,8 @@ from api.v1.views import app_views
 from flask import jsonify, request, abort
 
 
-@app_views.route('/cities/<cities_id>/places', methods=['GET'], strict_slashes=False)
+@app_views.route('/cities/<cities_id>/places',
+                 methods=['GET'], strict_slashes=False)
 def all_places_obj():
     """Retrieves a list of all place objects"""
     city = storage.get(City, city_id)

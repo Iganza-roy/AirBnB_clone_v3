@@ -71,6 +71,14 @@ test_db_storage.py'])
 
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
+    def setUp(self):
+        """Set up test environment for FileStorage"""
+        storage.clear()
+
+    def tearDown(self):
+        """Clean up test environment for FileStorage"""
+        storage.clear()
+
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
