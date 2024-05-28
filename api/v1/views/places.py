@@ -11,7 +11,7 @@ from api.v1.views import app_views
 from flask import jsonify, request, abort
 
 
-@app_views.route('/cities/<cities_id>/places',
+@app_views.route('/cities/<city_id>/places',
                  methods=['GET'], strict_slashes=False)
 def all_places_obj():
     """Retrieves a list of all place objects"""
@@ -85,3 +85,5 @@ def update_place(place_id: str):
             setattr(place, key, value)
     place.save()
     return jsonify(place.to_dict()), 200
+
+
